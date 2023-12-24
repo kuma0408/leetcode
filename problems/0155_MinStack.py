@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/min-stack/description/
 class MinStack:
 
     def __init__(self):
@@ -18,6 +19,8 @@ class MinStack:
         self.min_li.pop()
         if len(self.li) == 0:
             self.min = 2 ** 31
+        else:
+            self.min = self.min_li[-1]
 
     def top(self) -> int:
         return self.li[-1]
