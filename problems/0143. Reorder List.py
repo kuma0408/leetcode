@@ -1,4 +1,3 @@
-import copy
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -9,21 +8,27 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        head2 = copy.copy(head)
-        count = 0
-        prev = None
-        curr = head2
+        # find middle
+        slow, fast = head, head.next
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
 
-        while curr:
-            next = curr.next
-            curr.next = prev
-            prev = curr
-            curr = next
-            count += 1
+        # reverse second half
+        second = slow.next
+        # set first half period and reverse second half period
+        prev = slow.next = None
+        while second:
+            next = second.next
+            second.next = prev
+            prev = second
+            second = next
 
-        while count > 0:
-            head_next = head.next
-            head.next = head2
-            head2_next = head2.next
-            head2.next = head.next.next
-
+        # merge two halfs
+        first, second = head, prev
+        while second:
+            next1, next2 = first.next, second.next
+            first.next = second
+            second.next = next1
+            first = next1
+            second = next2
